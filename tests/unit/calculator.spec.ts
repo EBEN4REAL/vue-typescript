@@ -12,10 +12,9 @@ const getButtons = (calc: any) =>
     return accumulator;
   }, {})
 
-
 let calc: any;
-let buttons;
-let output;
+let buttons: any;
+let output: any;
   
 describe('Calculator.vue', () => {
     beforeEach(() => {
@@ -43,9 +42,6 @@ describe('Calculator.vue', () => {
             }
         })
         describe('Digit buttons', () => {
-            beforeEach(() => {
-                buttons = getButtons(calc)
-            });
             for(let i=0; i<10; i++) {
                 test(`should render a button with digit ${i} with a class of digit-${i}`, () => {
                     expect(calc.find(`.digit-${i}`).exists()).toBe(true)
@@ -66,11 +62,77 @@ describe('Calculator.vue', () => {
     })
 
     describe("Interactivity and computation", () => {
+        beforeEach(() => (buttons = getButtons(calc)))
+       
         describe("clearing output display", () => {
             test('It should clear the output when the clear button is clicked', async () => {
-                await calc.find('.clear').trigger('click')
-                expect(calc.find('.output').text()).toBe("")
+                let actions: string[][] = [
+                    ['digit-2', '2'],
+                    ['clear', ""]
+                ]
+                for(const [op, expected] of actions) {
+                    await buttons[op].trigger('click')
+                    expect(output.text()).toBe(expected)
+                }
+            })
+        })
+        describe("Simple operations" , () => {
+            beforeEach(() => (buttons = getButtons(calc)))
 
+            test("It should successfully add numbers together", async () => {
+                const actions: string[][] = [
+                    ['digit-1', "1"],
+                    ['op-add', "1+"],
+                    ['digit-2', "1+2"],
+                    ['eq', "3.00"]
+                ]
+                
+                for(const [btn, expected] of actions) {
+                    await buttons[btn].trigger('click')
+                    expect(output.text()).toBe(expected)
+                }
+            })
+
+            test("Subtraction of numbers must run successfully", async () => {
+                const actions: string[][] = [
+                    ['digit-5', "5"],
+                    ['op-sub', "5-"],
+                    ['digit-2', "5-2"],
+                    ['eq', "3.00"]
+                ]
+                
+                for(const [btn, expected] of actions) {
+                    await buttons[btn].trigger('click')
+                    expect(output.text()).toBe(expected)
+                }
+            })
+
+            test("Multiplication of numbers must run successfully", async () => {
+                const actions: string[][] = [
+                    ['digit-5', "5"],
+                    ['op-mul', "5*"],
+                    ['digit-2', "5*2"],
+                    ['eq', "10.00"]
+                ]
+                
+                for(const [btn, expected] of actions) {
+                    await buttons[btn].trigger('click')
+                    expect(output.text()).toBe(expected)
+                }
+            })
+
+            test("Multiplication of numbers must run successfully", async () => {
+                const actions: string[][] = [
+                    ['digit-5', "5"],
+                    ['op-div', "5/"],
+                    ['digit-2', "5/2"],
+                    ['eq', "2.50"]
+                ]
+                
+                for(const [btn, expected] of actions) {
+                    await buttons[btn].trigger('click')
+                    expect(output.text()).toBe(expected)
+                }
             })
         })
     })
