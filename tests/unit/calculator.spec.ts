@@ -12,12 +12,10 @@ const getButtons = (calc: any) =>
     return accumulator;
   }, {})
 
-console.log(getButtons)
 
-  let calc: any;
-  let buttons;
-  let output;
-
+let calc: any;
+let buttons;
+let output;
   
 describe('Calculator.vue', () => {
     beforeEach(() => {
@@ -51,6 +49,9 @@ describe('Calculator.vue', () => {
             for(let i=0; i<10; i++) {
                 test(`should render a button with digit ${i} with a class of digit-${i}`, () => {
                     expect(calc.find(`.digit-${i}`).exists()).toBe(true)
+                })
+                test(`Digit ${i} button should update output when clicked`, () => {
+                    expect(calc.find(`.digit-${i}`).trigger('click'))
                 })
             }
         })
