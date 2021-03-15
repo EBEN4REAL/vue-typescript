@@ -50,9 +50,9 @@ describe('Calculator.vue', () => {
                 test(`should render a button with digit ${i} with a class of digit-${i}`, () => {
                     expect(calc.find(`.digit-${i}`).exists()).toBe(true)
                 })
-                test(`Digit ${i} button should update output when clicked`, () => {
-                   calc.find(`.digit-${i}`).trigger('click')
-                   expect(calc.find(`.output`).text()).toBe(""+i)
+                test(`Digit ${i} button should update output when clicked`, async () => {
+                    await calc.find(`.digit-${i}`).trigger("click")
+                    expect(calc.find('.output').text()).toBe("" + i);
                 })
             }
         })
@@ -62,6 +62,16 @@ describe('Calculator.vue', () => {
 
         it('should render the equal button with a class of eq', () => {
             expect(calc.find('.eq').exists()).toBe(true)
+        })
+    })
+
+    describe("Interactivity and computation", () => {
+        describe("clearing output display", () => {
+            test('It should clear the output when the clear button is clicked', async () => {
+                await calc.find('.clear').trigger('click')
+                expect(calc.find('.output').text()).toBe("")
+
+            })
         })
     })
     
