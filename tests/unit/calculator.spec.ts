@@ -51,7 +51,8 @@ describe('Calculator.vue', () => {
                     expect(calc.find(`.digit-${i}`).exists()).toBe(true)
                 })
                 test(`Digit ${i} button should update output when clicked`, () => {
-                    expect(calc.find(`.digit-${i}`).trigger('click'))
+                   calc.find(`.digit-${i}`).trigger('click')
+                   expect(calc.find(`.output`).text()).toBe(""+i)
                 })
             }
         })
