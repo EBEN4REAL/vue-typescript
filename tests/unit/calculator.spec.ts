@@ -9,7 +9,6 @@ const buttonNames = [
 const getButtons = (calc: any) => 
   buttonNames.reduce((accumulator: any, btn) => {
     accumulator[btn] = calc.find("." + btn);
-    console.log(accumulator)
     return accumulator;
   }, {})
 
@@ -49,11 +48,9 @@ describe('Calculator.vue', () => {
             beforeEach(() => {
                 buttons = getButtons(calc)
             });
-            // @ts-ignore
-            const digitClasses: string[] =  Array(10).fill().map((e, i) => `digit-${i}`)
-            for(let i=0; i<digitClasses.length; i++) {
-                test(`should render a button with digit ${i} with a class of ${digitClasses[i]}`, () => {
-                    expect(calc.find(`.${digitClasses[i]}`).exists()).toBe(true)
+            for(let i=0; i<10; i++) {
+                test(`should render a button with digit ${i} with a class of digit-${i}`, () => {
+                    expect(calc.find(`.digit-${i}`).exists()).toBe(true)
                 })
             }
         })
