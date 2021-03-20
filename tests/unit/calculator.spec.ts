@@ -6,8 +6,8 @@ const buttonNames = [
     // @ts-ignore
     ...Array(10).fill().map((e, i) => `digit-${i}`),
 ];
-const getButtons = (calc: any) => 
-  buttonNames.reduce((accumulator: any, btn) => {
+const getButtons = (calc: any): object => 
+  buttonNames.reduce((accumulator: any, btn: string) => {
     accumulator[btn] = calc.find("." + btn);
     return accumulator;
   }, {})
